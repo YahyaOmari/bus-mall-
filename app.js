@@ -30,6 +30,10 @@ function randomPorduct(){
     } while (leftImage === middleImage || leftImage === rightImage || rightImage === middleImage);
 
     renderImage(leftImage,middleImage,rightImage);
+
+    // console.log(leftImage);
+    // console.log(middleImage);
+    // console.log(rightImage);
 }
 
 function renderImage(leftImage, middleImage, rightImage){
