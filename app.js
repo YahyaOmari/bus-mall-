@@ -8,7 +8,7 @@ var rightProductImage = document.getElementById("right_image_img");
 
 var all_clicks = document.getElementById('all_clicks')
 
-var trials = 8;
+var trials = 25;
 
 function Product(name, pathImage){
     this.name=name;
@@ -37,10 +37,13 @@ function renderImage(leftImage, middleImage, rightImage){
     leftProductImage.setAttribute('src', arrayOfProduct[leftImage].pathImage);
     middleProductImage.setAttribute('src',arrayOfProduct[middleImage].pathImage);
     rightProductImage.setAttribute('src',arrayOfProduct[rightImage].pathImage);
+
+    leftProductImage.textContent = arrayOfProduct[leftImage].name;
+    middleProductImage.textContent = arrayOfProduct[leftImage].name;
+    rightProductImage.textContent = arrayOfProduct[leftImage].name;
     
     arrayOfProduct[leftImage].showImage++;
-    console.log(    arrayOfProduct[leftImage].showImage
-        );
+    // console.log(arrayOfProduct[leftImage].showImage);
     arrayOfProduct[middleImage].showImage++;
     arrayOfProduct[rightImage].showImage++;
 }
@@ -49,24 +52,22 @@ function checkProduct(indicator){
 
     for (var index = 0; index < arrayOfProduct.length; index++) {
         if (arrayOfProduct[index].pathImage === indicator){
-        arrayOfProduct[index].timeClicked++;
-        trials--;
+            arrayOfProduct[index].timeClicked++;
+            trials--;
         }
     }
 }
 
 function countImage(event){
 
-    console.log(event.target);
+    // console.log(event.target);
 
     var targetId = event.target.id;
-    console.log(targetId);
+    // console.log(targetId);
     
-    arrayOfProduct[1].timeClicked++
-    console.log(arrayOfProduct[1]);
-
-
-    if (trials !== 1){
+    // arrayOfProduct[1].timeClicked++
+    // console.log(arrayOfProduct[1]);
+    if (trials !== 0){
 
         if(targetId === "left_image_img" || "middle_image_img" || "right_image_img"){
             var indicator = event.target.getAttribute('src');
@@ -87,7 +88,6 @@ new Product('breakfast', 'breakfast.jpg');
 new Product('bubblegum', 'bubblegum.jpg');
 new Product('chair', 'chair.jpg');
 new Product('cthulhu', 'cthulhu.jpg');
-
 new Product('dog-duck', 'dog-duck.jpg');
 new Product('dragon', 'dragon.jpg');
 new Product('pen', 'pen.jpg');
@@ -96,7 +96,6 @@ new Product('scissors', 'scissors.jpg');
 new Product('shark', 'shark.jpg');
 new Product('sweep', 'sweep.png');
 new Product('tauntaun', 'tauntaun.jpg');
-
 new Product('unicorn', 'unicorn.jpg');
 new Product('usb', 'usb.gif');
 new Product('water-can', 'water-can.jpg');
@@ -114,13 +113,9 @@ parentElement.appendChild(ul);
 function results() {
     for (var i=0; i<arrayOfProduct.length; i++){
         var list = document.createElement('li');
-        list.textContent = "Image " + arrayOfProduct[i].showImage + "Clicked" + arrayOfProduct[i].timeClicked;
+        // console.log(arrayOfProduct.length);
+        list.textContent = "Image "+ " " + arrayOfProduct[i].name + " " +" showed "  + arrayOfProduct[i].showImage + " " + " and clicked :" + arrayOfProduct[i].timeClicked;
         ul.appendChild(list);
     }
 }
-
-
-
-// var result = document.getElementById("resultsID");
-// document.getElementById('results').innerHTML="Image " + arrayOfProduct[i].showImage;
 
