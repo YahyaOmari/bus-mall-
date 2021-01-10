@@ -1,14 +1,14 @@
 *{
     background-color: rgb(133, 255, 133);
-    box-sizing: border-box;
 
 }
-img{
+section{
+    text-align: center;
+    display: inline-block;
     
-    display: inline;
-    float: left;
-    width: 250px;
-    padding: 5px;
+  content: "";
+  clear: both;
+  display: table;
 }
 .resultsID{
     font-size: 10px;
