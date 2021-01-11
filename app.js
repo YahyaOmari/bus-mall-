@@ -1,7 +1,5 @@
 'use strict';
 
-var arrayOfProduct = [];
-
 var leftProductImage = document.getElementById("left_image_img");
 var middleProductImage = document.getElementById("middle_image_img");
 var rightProductImage = document.getElementById("right_image_img");
@@ -9,9 +7,12 @@ var rightProductImage = document.getElementById("right_image_img");
 var all_clicks = document.getElementById('all_clicks')
 var canvas = document.getElementById('productChart').getContext('2d');
 
+// Global array, to make it easier to use them
+var arrayOfProduct = [];
 var shownImages = [];
 var trials = 25;
 
+// constructor
 function Product(name, pathImage) {
     this.name = name;
     this.pathImage = "IMG/" + pathImage;
@@ -21,16 +22,17 @@ function Product(name, pathImage) {
     this.showImage = 0;
     arrayOfProduct.push(this);
 }
+// checking name of the image
 function checkAvailability (selectedProductName) {
-
+    
     for (var i = 0; i < shownImages.length; i++) {
-      if (shownImages[i].name === selectedProductName) {
-        return true;
-      }
+        if (shownImages[i].name === selectedProductName) {
+            return true;
+        }
     }
-    return false;  
-  }
-  
+    return false; 
+}
+
 function randomPorduct() {
 
     do {
@@ -41,12 +43,14 @@ function randomPorduct() {
     do {
         var middleImage = Math.round(Math.random() * (arrayOfProduct.length - 1))
         var middleProductImageName = arrayOfProduct[middleImage].name;
+
         var rightImage = Math.round(Math.random() * (arrayOfProduct.length - 1))
         var rightProductImageName = arrayOfProduct[rightImage].name;
+
     } while (leftImage === middleImage || checkAvailability(middleProductImageName) || rightImage === middleImage || checkAvailability(rightProductImageName) || leftImage === rightImage);  
 
+    // to clear the array
     shownImages = [];
-
     shownImages.push(
         arrayOfProduct[leftImage],
         arrayOfProduct[middleImage],
@@ -56,6 +60,7 @@ function randomPorduct() {
     renderImage(leftImage, middleImage, rightImage);
 }
 
+// rendering images
 function renderImage(leftImage, middleImage, rightImage) {
 
     leftProductImage.setAttribute('src', arrayOfProduct[leftImage].pathImage);
@@ -67,28 +72,28 @@ function renderImage(leftImage, middleImage, rightImage) {
     rightProductImage.textContent = arrayOfProduct[leftImage].name;
 
     arrayOfProduct[leftImage].showImage++;
-    // console.log(arrayOfProduct[leftImage].showImage);
     arrayOfProduct[middleImage].showImage++;
     arrayOfProduct[rightImage].showImage++;
 }
 
-
 function renderChart() {
-
+    // creating empty arrays to push them in the chart object
     var arrayOfProductName = [];
     var arrayOfProductClicked = [];
     var arrayOfProductShown = [];
 
+    // pushing name, clicked and show image to an empty arrays
     for (var i = 0; i < arrayOfProduct.length; i++) {
         arrayOfProductName.push(arrayOfProduct[i].name);
         arrayOfProductClicked.push(arrayOfProduct[i].timeClicked);
         arrayOfProductShown.push(arrayOfProduct[i].showImage);
     }
-
+    
+// Creating a chart
 var myChart = new Chart(canvas, {
     type: 'bar',
     data: {
-        labels: arrayOfProductName,
+        labels: arrayOfProductName, // in x axis will appear the names of products
         datasets: [{
             label: '# of Votes',
             data: arrayOfProductClicked,
@@ -175,9 +180,9 @@ var myChart = new Chart(canvas, {
 
 function checkProduct(indicator) {
 
-    for (var index = 0; index < arrayOfProduct.length; index++) {
-        if (arrayOfProduct[index].pathImage === indicator) {
-            arrayOfProduct[index].timeClicked++;
+    for (var i = 0; i < arrayOfProduct.length; i++) {
+        if (arrayOfProduct[i].pathImage === indicator) {
+            arrayOfProduct[i].timeClicked++;
             trials--;
         }
     }
