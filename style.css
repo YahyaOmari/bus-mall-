@@ -1,13 +1,6 @@
 body {
     background-color:#2bff4e;
 }
-
-nav {
-    max-width:  900px;
-    margin: 0 auto;
-    overflow: hidden
-}
-
 nav ul {
     margin: auto;
     display: block;
@@ -24,11 +17,6 @@ main > :nth-child(odd){
     width:30%   
 }
 
-main ul, main li {
-    padding: 0;
-    margin: 10px 0;
-}
-
 img {
     max-height: 300px;
     max-width: 100%;
@@ -41,17 +29,4 @@ li {
     margin: 20px 40px 20px 0px;
     font-size: 1.2em;
 
-}
-
-
-footer div {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-section div {
-    padding: 7px;
-    box-sizing: border-box;
-    float: left;
-    width: 50%;
 }

@@ -54,7 +54,7 @@ function renderImage(leftImage, middleImage, rightImage){
 
 function checkProduct(indicator){
 
-    for (var index = 0; index < arrayOfProduct.length-1; index++) {
+    for (var index = 0; index < arrayOfProduct.length; index++) {
         if (arrayOfProduct[index].pathImage === indicator){
             arrayOfProduct[index].timeClicked++;
             trials--;
@@ -71,7 +71,7 @@ function countImage(event){
     
     // arrayOfProduct[1].timeClicked++
     // console.log(arrayOfProduct[1]);
-    if (trials !== 0){
+    if (trials > 0){
 
         if(targetId === "left_image_img" || "middle_image_img" || "right_image_img"){
             var indicator = event.target.getAttribute('src');
