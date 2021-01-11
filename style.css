@@ -1,26 +1,14 @@
 body {
     background-color:#2bff4e;
 }
-nav ul {
-    margin: auto;
-    display: block;
-    max-width: 660px;
-}
-
-main{
-    max-width: 900px;
-    margin: 0 auto;
-    overflow: hidden;
-}
 
 main > :nth-child(odd){
     width:30%   
 }
-
-img {
-    max-height: 300px;
-    max-width: 100%;
-    margin: 0 auto;
+nav ul {
+    margin: auto;
+    display: block;
+    max-width: 660px;
 }
 
 li {
@@ -28,5 +16,11 @@ li {
     list-style: none;
     margin: 20px 40px 20px 0px;
     font-size: 1.2em;
+}
 
+.image{
+    text-align: center;
+    max-height: 300px;
+    max-width: 100%;
+    overflow: hidden;
 }
