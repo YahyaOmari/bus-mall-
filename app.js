@@ -126,8 +126,8 @@ var myChart = new Chart(canvas, {
             ],
             borderWidth: 1
         },{
-            label: 'Time shown for the Goat',
-            data: arrayOfProductShown, // array of values (count for each goat when it was clicked)
+            label: 'Time shown for the Images',
+            data: arrayOfProductShown, 
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
