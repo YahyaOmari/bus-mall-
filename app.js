@@ -7,6 +7,7 @@ var rightProductImage = document.getElementById("right_image_img");
 var all_clicks = document.getElementById('all_clicks')
 var resultsID = document.getElementById('resultsID')
 var canvas = document.getElementById('productChart').getContext('2d');
+var clearData = document.getElementById('Clear_Data');
 
 // Global array, to make it easier to use them
 var arrayOfProduct = [];
@@ -37,6 +38,16 @@ function checkStorage() {
         countImage;
     }
 }
+
+// reset data
+function clearLocalStorage(){
+
+    // localStorage.clear();
+    location.reload(); // Refresh the page so the data is cleared.
+    arrayOfProduct = [];
+    countImage;
+}
+
 // checking name of the image
 function checkAvailability(selectedProductName) {
 
@@ -219,7 +230,6 @@ function countImage(event) {
         console.log(arrayOfProduct);
         renderChart();
         storeData();
-
     }
 
 }
@@ -250,6 +260,8 @@ randomPorduct();
 // all_clicks.addEventListener('submit', countImage);
 all_clicks.addEventListener('click', countImage);
 checkStorage();
+// clearData.addEventListener('click',clearLocalStorage );
+// clearLocalStorage();
 
 
 
