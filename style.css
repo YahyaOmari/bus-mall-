@@ -6,7 +6,6 @@ nav ul {
     display: block;
     max-width: 660px;
 }
-
 li {
     display: inline-block;
     list-style: none;
@@ -17,9 +16,7 @@ li {
 #all_clicks{
     text-align: center;
     width: 100%;
-    height: 550px;
-
-
+    height: 350px;
 }
 #all_clicks div{
     display: inline-block;
@@ -30,7 +27,16 @@ li {
 #all_clicks div img {
     width: 450px;
 }
-
 #resultsID{
     padding: 20px;
+}
+button{
+    padding: 20px;
+}
+.clearData{
+    display: block;
+    height: 100px;
+    width: 100%;
+    position: relative;
+    bottom: 0;
 }

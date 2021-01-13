@@ -1,50 +1,82 @@
 'use strict';
-
-var arrayOfProduct = [];
-
+// creating variables from html ID
 var leftProductImage = document.getElementById("left_image_img");
 var middleProductImage = document.getElementById("middle_image_img");
 var rightProductImage = document.getElementById("right_image_img");
 
-var all_clicks = document.getElementById('all_clicks')
+var allClicks = document.getElementById('all_clicks')
+var resultsID = document.getElementById('resultsID')
 var canvas = document.getElementById('productChart').getContext('2d');
+var clearData = document.getElementById('Clear_Data');
 
+// Global array, to make it easier to use them
+var arrayOfProduct = [];
 var shownImages = [];
 var trials = 25;
 
+// constructor
 function Product(name, pathImage) {
     this.name = name;
     this.pathImage = "IMG/" + pathImage;
 
-
     this.timeClicked = 0;
     this.showImage = 0;
+    
     arrayOfProduct.push(this);
+
 }
-function checkAvailability (selectedProductName) {
+
+// storing the data in the browser
+function storeData() {
+    localStorage.setItem('order', JSON.stringify(arrayOfProduct));
+    console.log(arrayOfProduct);
+}
+// reverse string to object
+function checkStorage() {
+    if (localStorage.length > 0) {
+        arrayOfProduct = JSON.parse(localStorage.getItem('order'));
+        countImage;
+    }
+}
+
+// reset data
+function clearLocalStorage(){
+
+    // localStorage.clear();
+    location.reload(); // Refresh the page so the data is cleared.
+    arrayOfProduct = [];
+    countImage;
+}
+
+// checking name of the image
+function checkAvailability(selectedProductName) {
 
     for (var i = 0; i < shownImages.length; i++) {
-      if (shownImages[i].name === selectedProductName) {
-        return true;
-      }
+        if (shownImages[i].name === selectedProductName) {
+            return true;
+        }
     }
-    return false;  
-  }
-  
+    return false;
+}
+
+//Rendering the images randomly
 function randomPorduct() {
 
     do {
         var leftImage = Math.floor(Math.random() * (arrayOfProduct.length - 1))
-        var leftProductImageName=arrayOfProduct[leftImage].name;
+        var leftProductImageName = arrayOfProduct[leftImage].name;
     } while (checkAvailability(leftProductImageName));
 
     do {
         var middleImage = Math.round(Math.random() * (arrayOfProduct.length - 1))
         var middleProductImageName = arrayOfProduct[middleImage].name;
+
         var rightImage = Math.round(Math.random() * (arrayOfProduct.length - 1))
         var rightProductImageName = arrayOfProduct[rightImage].name;
-    } while (leftImage === middleImage || checkAvailability(middleProductImageName) || rightImage === middleImage || checkAvailability(rightProductImageName) || leftImage === rightImage);  
 
+    } while (leftImage === middleImage || checkAvailability(middleProductImageName) || rightImage === middleImage || checkAvailability(rightProductImageName) || leftImage === rightImage);
+
+    // to clear the array
     shownImages = [];
 
     shownImages.push(
@@ -52,10 +84,11 @@ function randomPorduct() {
         arrayOfProduct[middleImage],
         arrayOfProduct[rightImage]
     )
-    
+
     renderImage(leftImage, middleImage, rightImage);
 }
 
+// rendering images
 function renderImage(leftImage, middleImage, rightImage) {
 
     leftProductImage.setAttribute('src', arrayOfProduct[leftImage].pathImage);
@@ -67,131 +100,127 @@ function renderImage(leftImage, middleImage, rightImage) {
     rightProductImage.textContent = arrayOfProduct[leftImage].name;
 
     arrayOfProduct[leftImage].showImage++;
-    // console.log(arrayOfProduct[leftImage].showImage);
     arrayOfProduct[middleImage].showImage++;
     arrayOfProduct[rightImage].showImage++;
 }
 
-
 function renderChart() {
-
+    // creating empty arrays to push them in the chart object
     var arrayOfProductName = [];
     var arrayOfProductClicked = [];
     var arrayOfProductShown = [];
 
+    // pushing name, clicked and show image to an empty arrays
     for (var i = 0; i < arrayOfProduct.length; i++) {
         arrayOfProductName.push(arrayOfProduct[i].name);
         arrayOfProductClicked.push(arrayOfProduct[i].timeClicked);
         arrayOfProductShown.push(arrayOfProduct[i].showImage);
     }
 
-var myChart = new Chart(canvas, {
-    type: 'bar',
-    data: {
-        labels: arrayOfProductName,
-        datasets: [{
-            label: '# of Votes',
-            data: arrayOfProductClicked,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgb(255, 255, 255)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgb(106, 90, 205)',
-                'rgb(238, 130, 238)',
-                'rgba(30, 186, 119, 0.2)',
-                'rgb(180, 180, 180)',
-                'rgb(0, 0, 0)',
-                'rgba(255, 99, 71, 0.2)',
-                'rgb(255, 165, 0)',
-                'rgb(60, 179, 113)',
-                'rgb(240, 240, 240)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgb(255, 255, 255)',
-                'rgba(255, 206, 86, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
+    // Creating a chart
+    var myChart = new Chart(canvas, {
+        type: 'bar',
+        data: {
+            labels: arrayOfProductName, // in x axis will appear the names of products
+            datasets: [{
+                label: '# of Clicks',
+                data: arrayOfProductClicked,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgb(255, 255, 255)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgb(106, 90, 205)',
+                    'rgb(238, 130, 238)',
+                    'rgba(30, 186, 119, 0.2)',
+                    'rgb(180, 180, 180)',
+                    'rgb(0, 0, 0)',
+                    'rgba(255, 99, 71, 0.2)',
+                    'rgb(255, 165, 0)',
+                    'rgb(60, 179, 113)',
+                    'rgb(240, 240, 240)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgb(255, 255, 255)',
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
 
-                
-            ],
-            borderWidth: 1
-        },{
-            label: 'Time shown for the Goat',
-            data: arrayOfProductShown, // array of values (count for each goat when it was clicked)
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgb(255, 255, 255)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-                'rgb(106, 90, 205)',
-                'rgb(238, 130, 238)',
-                'rgba(30, 186, 119, 0.2)',
-                'rgb(180, 180, 180)',
-                'rgb(0, 0, 0)',
-                'rgba(255, 99, 71, 0.2)',
-                'rgb(255, 165, 0)',
-                'rgb(60, 179, 113)',
-                'rgb(240, 240, 240)',
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgb(255, 255, 255)',
-                'rgba(255, 206, 86, 0.2)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 1)',
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 206, 86, 1)',
-              'rgba(75, 192, 192, 1)',
-              'rgba(153, 102, 255, 1)',
-              'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-          }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
+
+                ],
+                borderWidth: 1
+            }, {
+                label: 'Time shown for the Images',
+                data: arrayOfProductShown,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgb(255, 255, 255)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgb(106, 90, 205)',
+                    'rgb(238, 130, 238)',
+                    'rgba(30, 186, 119, 0.2)',
+                    'rgb(180, 180, 180)',
+                    'rgb(0, 0, 0)',
+                    'rgba(255, 99, 71, 0.2)',
+                    'rgb(255, 165, 0)',
+                    'rgb(60, 179, 113)',
+                    'rgb(240, 240, 240)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgb(255, 255, 255)',
+                    'rgba(255, 206, 86, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
             }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
-    }
-});
+    });
 }
 
+// checking if the user clicked in the image so the trial will -1
 function checkProduct(indicator) {
 
-    for (var index = 0; index < arrayOfProduct.length; index++) {
-        if (arrayOfProduct[index].pathImage === indicator) {
-            arrayOfProduct[index].timeClicked++;
+    for (var i = 0; i < arrayOfProduct.length; i++) {
+        if (arrayOfProduct[i].pathImage === indicator) {
+            arrayOfProduct[i].timeClicked++;
             trials--;
+            
         }
     }
 }
 
 function countImage(event) {
-
-    // console.log(event.target);
-
     var targetId = event.target.id;
-    // console.log(targetId);
 
-    // arrayOfProduct[1].timeClicked++
-    // console.log(arrayOfProduct[1]);
     if (trials > 0) {
 
         if (targetId === "left_image_img" || "middle_image_img" || "right_image_img") {
@@ -200,10 +229,12 @@ function countImage(event) {
             randomPorduct();
         }
     } else {
-        all_clicks.removeEventListener('click', countImage);
+        allClicks.removeEventListener('click', countImage);
         console.log(arrayOfProduct);
         renderChart();
+        storeData();
     }
+
 }
 
 new Product('bag', 'bag.jpg');
@@ -227,22 +258,9 @@ new Product('usb', 'usb.gif');
 new Product('water-can', 'water-can.jpg');
 new Product('wine-glass', 'wine-glass.jpg');
 
+//Calling the functions
+
 randomPorduct();
-all_clicks.addEventListener('click', countImage);
-
-
-
-// var parentElement = document.getElementById("creatUl");
-// var ul = document.createElement('ul');
-// parentElement.appendChild(ul);
-
-// function results() {
-//     for (var i = 0; i < arrayOfProduct.length; i++) {
-//         var list = document.createElement('li');
-//         // console.log(arrayOfProduct.length);
-//         list.textContent = "Image " + " " + arrayOfProduct[i].name + " " + " showed " + arrayOfProduct[i].showImage + " " + " and clicked :" + arrayOfProduct[i].timeClicked;
-//         ul.appendChild(list);
-//     }
-//     // renderChart();
-// }
-
+// all_clicks.addEventListener('submit', countImage);
+allClicks.addEventListener('click', countImage);
+checkStorage();
