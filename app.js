@@ -1,10 +1,10 @@
 'use strict';
-
+// creating variables from html ID
 var leftProductImage = document.getElementById("left_image_img");
 var middleProductImage = document.getElementById("middle_image_img");
 var rightProductImage = document.getElementById("right_image_img");
 
-var all_clicks = document.getElementById('all_clicks')
+var allClicks = document.getElementById('all_clicks')
 var resultsID = document.getElementById('resultsID')
 var canvas = document.getElementById('productChart').getContext('2d');
 var clearData = document.getElementById('Clear_Data');
@@ -59,6 +59,7 @@ function checkAvailability(selectedProductName) {
     return false;
 }
 
+//Rendering the images randomly
 function randomPorduct() {
 
     do {
@@ -77,6 +78,7 @@ function randomPorduct() {
 
     // to clear the array
     shownImages = [];
+
     shownImages.push(
         arrayOfProduct[leftImage],
         arrayOfProduct[middleImage],
@@ -204,6 +206,7 @@ function renderChart() {
     });
 }
 
+// checking if the user clicked in the image so the trial will -1
 function checkProduct(indicator) {
 
     for (var i = 0; i < arrayOfProduct.length; i++) {
@@ -226,7 +229,7 @@ function countImage(event) {
             randomPorduct();
         }
     } else {
-        all_clicks.removeEventListener('click', countImage);
+        allClicks.removeEventListener('click', countImage);
         console.log(arrayOfProduct);
         renderChart();
         storeData();
@@ -255,28 +258,9 @@ new Product('usb', 'usb.gif');
 new Product('water-can', 'water-can.jpg');
 new Product('wine-glass', 'wine-glass.jpg');
 
+//Calling the functions
 
 randomPorduct();
 // all_clicks.addEventListener('submit', countImage);
-all_clicks.addEventListener('click', countImage);
+allClicks.addEventListener('click', countImage);
 checkStorage();
-// clearData.addEventListener('click',clearLocalStorage );
-// clearLocalStorage();
-
-
-
-
-// var parentElement = document.getElementById("creatUl");
-// var ul = document.createElement('ul');
-// parentElement.appendChild(ul);
-
-// function results() {
-//     for (var i = 0; i < arrayOfProduct.length; i++) {
-//         var list = document.createElement('li');
-//         // console.log(arrayOfProduct.length);
-//         list.textContent = "Image " + " " + arrayOfProduct[i].name + " " + " showed " + arrayOfProduct[i].showImage + " " + " and clicked :" + arrayOfProduct[i].timeClicked;
-//         ul.appendChild(list);
-//     }
-//     // renderChart();
-// }
-

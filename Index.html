@@ -24,14 +24,13 @@
                 <img id="right_image_img" src="/IMG/breakfast.jpg" alt="Random" width="200" width="200"class="image">
             </div>
         </section>
-        <section style="height: 250px; width: 900px;">
+        <section style="height: 700px; width: 900px;">
             <canvas id="productChart" width="300" height="200"></canvas>
         </section>
+        <div class="clearData">
+            <button id="Clear_Data" onclick=clearLocalStorage()>Clear Data!</button>
+        </div>
     </main>
-    <footer>
-        <button id="Clear_Data" onclick=clearLocalStorage()>Clear Data!</button>
-
-
     <!-- <div>
         <button type="submit" id="resultsID" onclick=results() width="150" height="150">Click me!</button>
         <div id="creatUl"></div>
@@ -40,7 +39,6 @@
         <button type="submit" id="reset" width="150" height="150">Reset</button>
         <div id="creatUl"></div>
     </div> -->
-    </footer>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script src="app.js"></script>
 </body>
